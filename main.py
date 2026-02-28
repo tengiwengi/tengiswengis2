@@ -150,11 +150,6 @@ def accumulator (ht : HashTable) -> List[str]:
 def make_concordance(stop_words: HashTable, text: List[str]) -> HashTable:
     concordance = make_hash(2 * len(text))
     for line_number, line in enumerate(text, start=1):
-        
-        # REMOVED: for chunk in line.split():
-        
-        # Pass the ENTIRE line to the function.
-        # split_and_clean will handle spaces AND punctuation.
         words = split_and_clean(line) 
         
         for word_clean in words:
@@ -242,7 +237,6 @@ class TestCase(unittest.TestCase):
         self.assertEqual(hash_fn("my name is tengis"), 82155404364011468610727913)
         self.assertEqual(hash_fn("i am taking data structures"), 63280573535706715328024084225320484882551)
         self.assertEqual(hash_fn(""), 0) 
-        # Corrected: !@#$%^ does not hash to 0. It hashes to a positive int.
         self.assertEqual(hash_fn("!@#$%^"), 1004945849) 
 
     def test_make_hash(self):
@@ -294,8 +288,6 @@ class TestCase(unittest.TestCase):
         add(ht, "cherry", 4)
         self.assertEqual(lookup(ht, "cherry"), [4])
         
-        # Corrected: Adding duplicate (banana, 3) should result in single entry [3]
-        # because `add` checks for duplicates before inserting.
         add(ht, "banana", 3)
         self.assertEqual(sorted(lookup(ht, "banana")), [3]) 
 
